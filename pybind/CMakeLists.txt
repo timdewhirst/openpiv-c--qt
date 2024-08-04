@@ -4,7 +4,7 @@ option(BUILD_PYBIND "build python bindings" OFF)
 if (BUILD_PYBIND)
   message("building python bindings")
 
-  find_package(pybind11)
+  find_package(pybind11 CONFIG REQUIRED)
 
   include_directories(${CMAKE_SOURCE_DIR}/openpiv)
   if (pybind11_FOUND)
