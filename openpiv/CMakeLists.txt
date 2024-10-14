@@ -4,6 +4,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # ensure we check local libs first
 set(CMAKE_FIND_FRAMEWORK LAST)
 
+# set PIC
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 set(SOURCE
   ${CMAKE_CURRENT_SOURCE_DIR}/core/size.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/core/rect.cpp
@@ -15,6 +18,7 @@ set(LIBS)
 set(LIBNAME openpivcore)
 add_library(${LIBNAME} STATIC ${SOURCE})
 target_compile_definitions(${LIBNAME} PUBLIC _USE_MATH_DEFINES)
+
 
 # include path for pocket fft
 set(POCKETFFT_EXTERNAL_LIBRARY_CXX ${PROJECT_SOURCE_DIR}/external/pocketfft)

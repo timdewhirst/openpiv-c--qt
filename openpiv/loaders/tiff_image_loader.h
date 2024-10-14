@@ -37,5 +37,4 @@ namespace openpiv::core {
         struct impl;
         std::unique_ptr<impl> impl_;
     };
-
 }

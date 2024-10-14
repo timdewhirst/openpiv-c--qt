@@ -173,9 +173,6 @@ namespace {
 
         return im;
     }
-
-    /// register this loader
-    static const bool registeredloader = image_loader_registry::add< pnm_image_loader >();
 }
 
 namespace openpiv::core {

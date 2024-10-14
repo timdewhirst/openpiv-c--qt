@@ -26,7 +26,7 @@ core::gf_image load_from_file(const std::string& filename)
         if ( !is.is_open() )
             core::exception_builder<std::runtime_error>() << "failed to open " << filename;
 
-        auto loader{ core::image_loader_registry::find(is) };
+        auto loader{ core::image_loader_registry::instance().find(is) };
         if ( !loader )
             core::exception_builder<std::runtime_error>() << "failed to find loader for " << filename;
 
@@ -136,7 +136,7 @@ int main( int argc, char* argv[] )
     logger::info("found average; processed {} image files", processed);
 
     // process: for each image, subtract average and write as <name>.sub
-    std::shared_ptr<core::image_loader> writer{ core::image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<core::image_loader> writer{ core::image_loader_registry::instance().find("image/x-portable-anymap") };
     if ( !writer )
     {
         logger::error("failed to find loader for pnm");

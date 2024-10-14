@@ -23,7 +23,7 @@ TEST_CASE("image_loader_test - tiff_loader_mono")
     std::ifstream is("test-mono.tiff", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
     REQUIRE(loader->name() == std::string("image/tiff") );
 
@@ -39,7 +39,7 @@ TEST_CASE("image_loader_test - tiff_loader_rgba")
     std::ifstream is("test-rgb.tiff", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
     REQUIRE(loader->name() == std::string("image/tiff"));
 
@@ -62,7 +62,7 @@ TEST_CASE("image_loader_test - pnm_loader_load_p5")
     std::generate(data.begin(), data.end(), [](){ return rand() % 256; });
     ss.write(reinterpret_cast<const char*>(&data[0]), data.size());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(ss) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(ss) };
     REQUIRE(!!loader);
 
     g16_image im;
@@ -78,14 +78,14 @@ TEST_CASE("image_loader_test - pnm_loader_save_p5")
     std::ifstream is("test-mono.tiff", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
 
     g16_image im;
     loader->load( is, im );
 
     // write data
-    std::shared_ptr<image_loader> writer{ image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<image_loader> writer{ image_loader_registry::instance().find("image/x-portable-anymap") };
     REQUIRE(!!writer);
     REQUIRE(writer->name() == std::string("image/x-portable-anymap") );
 
@@ -98,14 +98,14 @@ TEST_CASE("image_loader_test - pnm_loader_save_p6")
     std::ifstream is("test-rgb.tiff", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
 
     g16_image im;
     loader->load( is, im );
 
     // write data
-    std::shared_ptr<image_loader> writer{ image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<image_loader> writer{ image_loader_registry::instance().find("image/x-portable-anymap") };
     REQUIRE(!!writer);
     REQUIRE(writer->name() == std::string("image/x-portable-anymap") );
 

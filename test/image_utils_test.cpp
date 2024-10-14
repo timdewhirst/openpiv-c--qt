@@ -57,7 +57,7 @@ TEST_CASE("image_utils_test - pnm_load_save_test")
     std::ifstream is("A_00001_a.tif", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
 
     g16_image im;
@@ -65,7 +65,7 @@ TEST_CASE("image_utils_test - pnm_load_save_test")
     is.close();
 
     // write data
-    std::shared_ptr<image_loader> writer{ image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<image_loader> writer{ image_loader_registry::instance().find("image/x-portable-anymap") };
     {
         std::fstream os( "A_00001_a.pgm", std::ios_base::trunc | std::ios_base::out | std::ios_base::binary );
         writer->save( os, im );
@@ -75,7 +75,7 @@ TEST_CASE("image_utils_test - pnm_load_save_test")
     is = std::ifstream("A_00001_a.pgm", std::ios::binary);
     REQUIRE(is.is_open());
 
-    loader = image_loader_registry::find(is);
+    loader = image_loader_registry::instance().find(is);
     REQUIRE(!!loader);
 
     g16_image reloaded;
@@ -127,7 +127,7 @@ TEST_CASE("image_utils_test - rgba_join_test")
     std::ifstream is("test-mono.tiff", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
 
     g16_image im;
@@ -148,7 +148,7 @@ TEST_CASE("image_utils_test - rgba_join_test")
 
     rgba16_image rgba = join_from_channels( r, g, b, a);
 
-    std::shared_ptr<image_loader> writer{ image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<image_loader> writer{ image_loader_registry::instance().find("image/x-portable-anymap") };
     std::fstream os( "test-rgbjoin.ppm", std::ios_base::trunc | std::ios_base::out | std::ios_base::binary );
     writer->save( os, rgba );
     os.close();

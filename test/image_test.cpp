@@ -176,7 +176,7 @@ TEST_CASE("image_test - scale_test")
     std::ifstream is("A_00001_a.tif", std::ios::binary);
     REQUIRE(is.is_open());
 
-    std::shared_ptr<image_loader> loader{ image_loader_registry::find(is) };
+    std::shared_ptr<image_loader> loader{ image_loader_registry::instance().find(is) };
     REQUIRE(!!loader);
 
     g16_image im;
@@ -194,7 +194,7 @@ TEST_CASE("image_test - scale_test")
     std::cout << "min: " << min << ", max: " << max << "\n";
 
     // write data
-    std::shared_ptr<image_loader> writer{ image_loader_registry::find("image/x-portable-anymap") };
+    std::shared_ptr<image_loader> writer{ image_loader_registry::instance().find("image/x-portable-anymap") };
     REQUIRE(!!writer);
     REQUIRE(writer->name() == "image/x-portable-anymap");
 

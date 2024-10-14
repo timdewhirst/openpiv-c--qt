@@ -132,9 +132,6 @@ namespace {
 
         return im;
     }
-
-
-    static const bool registeredloader = image_loader_registry::add< tiff_image_loader >();
 }
 
 

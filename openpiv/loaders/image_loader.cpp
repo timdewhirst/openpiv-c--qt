@@ -4,11 +4,18 @@
 // std
 #include <algorithm>
 #include <memory>
+#include <mutex>
 #include <vector>
 
 // local
+#include "loaders/pnm_image_loader.h"
+#include "loaders/tiff_image_loader.h"
 #include "core/util.h"
 #include "core/log.h"
+
+namespace {
+    std::once_flag registration_flag {};
+}
 
 namespace openpiv::core {
 
@@ -18,6 +25,19 @@ namespace openpiv::core {
     {
         static image_loader_container static_loaders;
         return static_loaders;
+    }
+
+    image_loader_registry& image_loader_registry::instance()
+    {
+        static image_loader_registry static_registry;
+        std::call_once(
+            registration_flag, 
+            []()
+            {
+                static_registry.add< pnm_image_loader >();
+                static_registry.add< tiff_image_loader >();
+            });
+        return static_registry;
     }
 
     image_loader_ptr_t image_loader_registry::find( std::istream& s )

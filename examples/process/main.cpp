@@ -109,7 +109,7 @@ int main( int argc, char* argv[] )
             if ( !is.is_open() )
                 core::exception_builder<std::runtime_error>() << "failed to open " << input_file;
 
-            auto loader{ core::image_loader_registry::find(is) };
+            auto loader{ core::image_loader_registry::instance().find(is) };
             if ( !loader )
                 core::exception_builder<std::runtime_error>() << "failed to find loader for " << input_file;
 

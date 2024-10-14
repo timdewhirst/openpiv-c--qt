@@ -30,18 +30,19 @@ namespace openpiv::core {
     class image_loader_registry
     {
     public:
+        static image_loader_registry& instance();
+
         /// find a loader for an image; if no ImageLoader is returned
         /// then this image is unhandled; the image loader returned is owned
         /// by the caller
-        static image_loader_ptr_t find( std::istream& );
+        image_loader_ptr_t find( std::istream& );
 
         /// find a loader by name for saving/forced loading
-        static image_loader_ptr_t find( const std::string& );
+        image_loader_ptr_t find( const std::string& );
 
         /// register a loader; done this way to avoid the provider knowing
         /// anything about the allocation/ownership of the loader.
         template < typename T >
-        static
         typename std::enable_if_t<
             std::is_base_of_v< image_loader, T >,
             bool >
@@ -51,7 +52,7 @@ namespace openpiv::core {
         }
 
     private:
-        static bool add( image_loader_ptr_t&& );
+        bool add( image_loader_ptr_t&& );
     };
 
     /// interface for ImageLoaders; the std::istream passed should be at
