@@ -13,7 +13,7 @@ set(SOURCE
 set(LIBS)
 
 set(LIBNAME openpivcore)
-add_library(${LIBNAME} SHARED ${SOURCE})
+add_library(${LIBNAME} STATIC ${SOURCE})
 target_compile_definitions(${LIBNAME} PUBLIC _USE_MATH_DEFINES)
 
 # include path for pocket fft
